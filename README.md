@@ -17,4 +17,4 @@ cd project
 cd movie_site
 python manage.py runserver
 ```
-Then open http://127.0.0.1/ in any browser
+Then open http://127.0.0.1:8000/ in any browser
