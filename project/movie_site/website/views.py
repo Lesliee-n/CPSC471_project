@@ -3,8 +3,11 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 from .forms import CreateUserForm
+from .models import Movie
+from .forms import TicketForm
 
 # Create your views here.
 def home(request):
@@ -12,6 +15,22 @@ def home(request):
 
 def test(request):
     return render(request, 'test.html', {})
+
+def movie_showcase(request):
+	movie_list = Movie.objects.all()
+	return render(request, 'movie_showcase.html', {'movie_list':movie_list})
+
+@login_required(login_url='login')
+def ticket_page(request):
+	if request.method == "GET":
+		form = TicketForm
+		return render(request, 'ticket_page.html', {'form':form})
+	if request.method == "POST":
+		form = TicketForm(request.POST)
+		if form.is_valid():
+			form.save()
+		return render(request, 'home.html', {})
+
 
 def registerPage(request):
 	if request.user.is_authenticated:
