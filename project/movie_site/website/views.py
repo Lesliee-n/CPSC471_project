@@ -4,9 +4,10 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from random import *
 
 from .forms import CreateUserForm
-from .models import Movie, Ticket
+from .models import Movie, Ticket, Order, Concession_stand
 from .forms import TicketForm
 
 
@@ -84,8 +85,24 @@ def concession_order(request):
 		soda_amount = request.POST.get("soda_amount")
 		print("POPCORN:"+str(popcorn_amount))
 		print("SODA:"+str(soda_amount))
+
 		#add order to context {} and latest ticket
 		lastest_ticket = Ticket.objects.last()
+		Concession_stand_latest = Concession_stand.objects.last() 
+
+		#make instance of order entry to databse
+		#feet_instance = Feet_measurment.objects.create()
+		#feet_instance.save()
+		order_instance = Order.objects.create(
+			customer_account_number = lastest_ticket.customer_account_number,
+			order_number = randint(1, 100),
+			items_ordered = "popcorn:"+str(popcorn_amount)+" soda:"+str(soda_amount),
+			pick_up_time = 15,
+			concession_stand_number = Concession_stand_latest
+		)
+		order_instance.save()
+
+
 		return render(request, "order_summary.html", {'soda_amount':soda_amount, 'popcorn_amount':popcorn_amount, 'lastest_ticket':lastest_ticket})
 
 @login_required(login_url='login')
