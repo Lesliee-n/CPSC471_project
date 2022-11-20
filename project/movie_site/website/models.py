@@ -5,7 +5,28 @@ SEX_CHOICES = (
     ("MALE", "Male"),
     ("OTHER", "other")
 )
-
+BOOL_CHOICE = (
+    (True, "True"),
+    (False, "False")
+)
+ROW_CHOICES = (
+    ("A","A"),
+    ("B","B"),
+    ("C","C"),
+    ("D","D"),
+    ("E","E")
+)
+SEAT_CHOICES = (
+    (1,"1"),
+    (2,"2"),
+    (3,"3"),
+    (4,"4"),
+    (5,"5")
+)
+PRICE_CHOICE = (
+    (10.00,'Adult Ticket $10.00'),
+    (5.00,'Kid Ticket $5.00')
+)
 
 # Create your models here.
 class Employee(models.Model):
@@ -52,11 +73,12 @@ class Show_time(models.Model):
     date = models.CharField(max_length=50, null = True, blank=True)
 
 class Ticket(models.Model):
+#employee_sex = models.CharField(max_length=50, choices=SEX_CHOICES, default="OTHER", null = True, blank=True)
     show_time_movie_id = models.ForeignKey(Show_time, on_delete=models.CASCADE)
-    seat_number = models.IntegerField(null = True, blank=True)
-    row_letter = models.CharField(max_length = 2, null = True, blank=True)
-    classification = models.CharField(max_length=50, null = True, blank=True)
-    price = models.FloatField(null = True, blank=True)
+    seat_number = models.IntegerField(choices=SEAT_CHOICES, default="1",null = True, blank=True)
+    row_letter = models.CharField(choices=ROW_CHOICES, default="A",max_length = 2, null = True, blank=True)
+    classification = models.BooleanField(null = True, blank=True)
+    price = models.FloatField(choices=PRICE_CHOICE, default="----",null = True, blank=True)
     date = models.CharField(max_length=50, null = True, blank=True)
     customer_account_number =  models.ForeignKey(Customer, on_delete=models.CASCADE)
 
