@@ -9,6 +9,7 @@ from .forms import CreateUserForm
 from .models import Movie
 from .forms import TicketForm
 
+
 # Create your views here.
 def home(request):
     return render(request, 'home.html', {})
@@ -19,18 +20,6 @@ def test(request):
 def movie_showcase(request):
 	movie_list = Movie.objects.all()
 	return render(request, 'movie_showcase.html', {'movie_list':movie_list})
-
-@login_required(login_url='login')
-def ticket_page(request):
-	if request.method == "GET":
-		form = TicketForm
-		return render(request, 'ticket_page.html', {'form':form})
-	if request.method == "POST":
-		form = TicketForm(request.POST)
-		if form.is_valid():
-			form.save()
-		return render(request, 'home.html', {})
-
 
 def registerPage(request):
 	if request.user.is_authenticated:
@@ -72,3 +61,27 @@ def loginPage(request):
 def logoutUser(request):
 	logout(request)
 	return redirect('login')
+
+@login_required(login_url='login')
+def ticket_page(request):
+	if request.method == "GET":
+		form = TicketForm
+		return render(request, 'ticket_page.html', {'form':form})
+	if request.method == "POST":
+		form = TicketForm(request.POST)
+		if form.is_valid():
+			form.save()
+		return render(request, 'concession_order.html', {})
+
+@login_required(login_url='login')
+def concession_order(request):
+	#input_problem = request.POST.get("existing_boot_problem")
+	#<select class="form-control" id="exampleFormControlSelect1" name="existing_boot_problem">
+	if request.method == "GET":
+		return render(request, 'concession_order.html', {})
+	if request.method == "POST":
+		popcorn_amount = request.POST.get("popcorn_amount")
+		soda_amount = request.POST.get("soda_amount")
+		print("POPCORN:"+str(popcorn_amount))
+		print("SODA:"+str(soda_amount))
+		return render(request, "home.html", {})
