@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from .forms import CreateUserForm
-from .models import Movie
+from .models import Movie, Ticket
 from .forms import TicketForm
 
 
@@ -84,4 +84,16 @@ def concession_order(request):
 		soda_amount = request.POST.get("soda_amount")
 		print("POPCORN:"+str(popcorn_amount))
 		print("SODA:"+str(soda_amount))
-		return render(request, "home.html", {})
+		#add order to context {} and latest ticket
+		lastest_ticket = Ticket.objects.last()
+		return render(request, "order_summary.html", {'soda_amount':soda_amount, 'popcorn_amount':popcorn_amount, 'lastest_ticket':lastest_ticket})
+
+@login_required(login_url='login')
+def order_summary(request):
+	popcorn_amount = 0
+	soda_amount = 1
+	#latest ticket
+	lastest_ticket = Ticket.objects.last()
+	print(lastest_ticket.date)
+	if request.method == "GET":
+		return render(request, 'order_summary.html', {'soda_amount':soda_amount, 'popcorn_amount':popcorn_amount, 'lastest_ticket':lastest_ticket})
