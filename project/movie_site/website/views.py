@@ -98,7 +98,7 @@ def concession_order(request):
 		#feet_instance.save()
 		order_instance = Order.objects.create(
 			customer_account_number = lastest_ticket.customer_account_number,
-			order_number = randint(1, 1000),
+			order_number = Order.objects.last().order_number + 1,
 			items_ordered = "popcorn: "+str(popcorn_amount)+" soda: "+str(soda_amount),
 			pick_up_time = 15,
 			concession_stand_number = Concession_stand_latest
@@ -121,17 +121,21 @@ def order_summary(request):
 		order_instance_latest = Order.objects.last()
 		amount_popcorn = int(order_instance_latest.items_ordered.split()[1])
 		amount_soda = int(order_instance_latest.items_ordered.split()[3])
+		ticket_price = int(lastest_ticket.price)
+		payment_due_popcorn = amount_popcorn*5
+		payment_due_soda = amount_soda*3
+		total = payment_due_popcorn + payment_due_soda  + ticket_price
 		print(amount_popcorn)
 		#create instance of transaction receipt
 		transaction_receipt_instance = Transaction_receipt.objects.create(
 			customer_account_number = lastest_ticket.customer_account_number,
 			transaction_number = randint(1, 1000),
-			receipt = randint(1, 100),
-			amount = amount_popcorn*5 + amount_soda*3,
+			receipt = Transaction_receipt.objects.last() + 1,
+			amount = total,
 			items = order_instance_latest.items_ordered,
 			date = "today"
 		)
-		return render(request, 'order_summary.html', {'soda_amount':amount_soda, 'popcorn_amount':amount_popcorn, 'lastest_ticket':lastest_ticket})
+		return render(request, 'order_summary.html', {'payment_due_soda':payment_due_soda, 'payment_due_popcorn':payment_due_popcorn, 'total':total, 'soda_amount':amount_soda, 'popcorn_amount':amount_popcorn, 'lastest_ticket':lastest_ticket})
 
 @login_required(login_url='login')
 def thank_you_page(request):

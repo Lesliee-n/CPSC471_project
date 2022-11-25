@@ -9,9 +9,12 @@
 
 <center>
     <h1>ORDER SUMMARY</h1>
-    <p>{{popcorn_amount}}</p>
-    <p>{{soda_amount}}</p>
-    <p>{{lastest_ticket.date}}</p>
+    <p>Are you ready to check out? Please confirm the following</p>
+    <p>{{popcorn_amount}} Popcorn bucket for ${{payment_due_popcorn}}</p>
+    <p>{{soda_amount}} Soda cup for ${{payment_due_soda}}</p>
+    <p>1 Ticket for ${{lastest_ticket.price}}</p>
+    <br></br>
+    <h2>Your total is ${{total}}</h2>
 
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">

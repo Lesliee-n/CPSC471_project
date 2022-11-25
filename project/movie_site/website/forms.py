@@ -15,8 +15,8 @@ class TicketForm(forms.ModelForm):
         fields = "__all__"
 
         price_option = (
-            ('Adult Ticket','Adult Ticket $10.00'),
-            ('Kid Ticket','Kid Ticket $5.00')
+            ('10','Adult Ticket $10.00'),
+            ('5','Kid Ticket $5.00')
         )
         labels ={
 			'show_time_movie_id':'what movie showtime do you want to see?',
