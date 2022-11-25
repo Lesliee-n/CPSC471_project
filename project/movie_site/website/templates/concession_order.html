@@ -7,10 +7,10 @@
 
 <center>
 <h1>Concession ordering Page</h1>
-<form method="POST" action="">
+<form method="POST">
     {%csrf_token%}
-    <h2>What problem are you having with your boot?</h2>
-    <label for="exampleFormControlSelect1">How many popcorn buckets do you want? Please select an amount:</label>
+
+    <label for="exampleFormControlSelect1">How many popcorn buckets do you want? Please select an amount ($5 each):</label>
     <select class="form-control" id="exampleFormControlSelect1" name="popcorn_amount">
         <option>0</option>
         <option>1</option>
@@ -18,7 +18,7 @@
         <option>3</option>
         <option>4</option>
     </select>
-    <label for="exampleFormControlSelect1">How many soda cups do you want? Please select an amount:</label>
+    <label for="exampleFormControlSelect1">How many soda do you want? Please select an amount ($3 each):</label>
     <select class="form-control" id="exampleFormControlSelect1" name="soda_amount">
         <option>0</option>
         <option>1</option>
