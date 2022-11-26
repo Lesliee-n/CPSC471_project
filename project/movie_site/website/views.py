@@ -13,7 +13,8 @@ from .forms import TicketForm
 
 # Create your views here.
 def home(request):
-    return render(request, 'home.html', {})
+	movie_list = Movie.objects.all()
+	return render(request, 'index.html', {'movie_list':movie_list})
 
 def test(request):
     return render(request, 'test.html', {})
