@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from random import *
 
 from .forms import CreateUserForm
-from .models import Movie, Ticket, Order, Concession_stand, Transaction_receipt
+from .models import Movie, Ticket, Order, Concession_stand, Transaction_receipt, Show_time
 from .forms import TicketForm
 
 
@@ -21,7 +21,8 @@ def test(request):
 
 def movie_showcase(request):
 	movie_list = Movie.objects.all()
-	return render(request, 'movie_showcase.html', {'movie_list':movie_list})
+	all_show_times = Show_time.objects.all()
+	return render(request, 'movie_showcase.html', {'movie_list':movie_list, 'all_show_times':all_show_times})
 
 def registerPage(request):
 	if request.user.is_authenticated:
@@ -43,7 +44,7 @@ def registerPage(request):
 
 def loginPage(request):
 	if request.user.is_authenticated:
-		return redirect('home')
+		return redirect('movie_showcase')
 	else:
 		if request.method == 'POST':
 			username = request.POST.get('username')
@@ -53,7 +54,7 @@ def loginPage(request):
 
 			if user is not None:
 				login(request, user)
-				return redirect('home')
+				return redirect('movie_showcase')
 			else:
 				messages.info(request, 'Username OR password is incorrect')
 
