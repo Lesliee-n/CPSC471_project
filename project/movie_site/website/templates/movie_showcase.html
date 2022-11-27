@@ -265,11 +265,14 @@ h1#logo a {
             <h4>{{x.movie_title}}</h4>
             <a class="active" href="{% url 'ticket_page' %}">Click Here To Buy Ticket</a>
 			<br></br>
-			<h3>{{x.movie_title}}'s Showtimes</h3>
+			<h3>Today's Showtimes for {{x.movie_title}}</h3>
 			{% for s in all_show_times %}
 				{% if s.movie_id == x %}
+				<p style="color:black;">---------------------------</p>
+				<p style="color:black;">{{s}} Info</p>
 
-				<p style="color:black;">{{s}}</p>
+				<p style="color:black;">Start Time: {{s.start_time}}</p>
+				<p style="color:black;">End Time: {{s.end_time}}</p>
 				{% endif %}
 			{% endfor %}
 

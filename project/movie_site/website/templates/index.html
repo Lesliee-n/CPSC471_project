@@ -261,7 +261,7 @@ h1#logo a {
         </div>
         {% for x in movie_list %}
           <div class="movie">
-            <div class="movie-image"> <span class="play"><span class="name">{{x.movie_title}}</span></span> <a href="#"><img src="https://assets.digicorus.corusdigitaldev.com/wp-content/uploads/sites/7/2018/06/01144909/Movietime_Generic2_462x386.jpg" alt="" /></a> </div>
+            <div class="movie-image"> <span class="play"><span class="name">{{x.movie_title}}</span></span> <a href="{% url 'login' %}"><img src="https://assets.digicorus.corusdigitaldev.com/wp-content/uploads/sites/7/2018/06/01144909/Movietime_Generic2_462x386.jpg" alt="" /></a> </div>
             <h4>{{x.movie_title}}</h4>
             <p style="color:red;">login to buy tickets!</p>
           </div>

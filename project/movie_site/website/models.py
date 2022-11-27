@@ -68,9 +68,8 @@ class Concession_stand(models.Model):
 
 class Show_time(models.Model):
     movie_id = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    start_time = models.IntegerField(null = True, blank=True)
-    end_time = models.IntegerField(null = True, blank=True)
-    date = models.CharField(max_length=50, null = True, blank=True)
+    start_time = models.CharField(max_length=20, null = True, blank=True)
+    end_time = models.CharField(max_length=20, null = True, blank=True)
 
 class Ticket(models.Model):
 #employee_sex = models.CharField(max_length=50, choices=SEX_CHOICES, default="OTHER", null = True, blank=True)
@@ -79,7 +78,6 @@ class Ticket(models.Model):
     row_letter = models.CharField(choices=ROW_CHOICES, default="A",max_length = 2, null = True, blank=True)
     classification = models.BooleanField(null = True, blank=True)
     price = models.FloatField(choices=PRICE_CHOICE, default="----",null = True, blank=True)
-    date = models.CharField(max_length=50, null = True, blank=True)
     customer_account_number =  models.ForeignKey(Customer, on_delete=models.CASCADE)
 
 class Order(models.Model):

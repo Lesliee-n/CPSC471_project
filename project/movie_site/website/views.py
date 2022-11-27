@@ -118,7 +118,6 @@ def order_summary(request):
 	soda_amount = 1
 	#latest ticket
 	lastest_ticket = Ticket.objects.last()
-	print(lastest_ticket.date)
 	if request.method == "GET":
 		order_instance_latest = Order.objects.last()
 		amount_popcorn = int(order_instance_latest.items_ordered.split()[1])
@@ -132,7 +131,7 @@ def order_summary(request):
 		transaction_receipt_instance = Transaction_receipt.objects.create(
 			customer_account_number = lastest_ticket.customer_account_number,
 			transaction_number = randint(1, 1000),
-			receipt = Transaction_receipt.objects.last() + 1,
+			receipt = Transaction_receipt.objects.last().receipt + 1,
 			amount = total,
 			items = order_instance_latest.items_ordered,
 			date = "today"
