@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Ticket
+from .models import Ticket, Customer
 from django import forms
 from tkinter import Widget
 
@@ -25,7 +25,7 @@ class TicketForm(forms.ModelForm):
     		'classification':'Are you a loyalty member?',
     		'price':'Select your ticket price.',
     		'date':'Input the movie date',
-    		'customer_account_number':'What is your account number?'
+    		'customer_account_number':'What is your user name number?'
         }
         widgets = {
 			#'show_time_movie_id':forms.MultipleChoiceField(),
@@ -36,3 +36,18 @@ class TicketForm(forms.ModelForm):
 			# 'date':forms.TextInput(),
 			#'customer_account_number':forms.MultiValueField()
         }
+
+class CustomerInfoForm(forms.ModelForm):
+	class Meta:
+		model = Customer
+		fields = "__all__"
+
+		labels ={
+			'customer_account_number':'Enter your user name:',
+    		'customer_email': 'What is your Email?',
+    		'first_name':'What is your first name?',
+    		'last_name':'What is your last name?',
+    		'middle_name':'What is your middle name?',
+    		'age' : 'What is your age?'
+        }
+

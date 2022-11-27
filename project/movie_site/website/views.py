@@ -7,8 +7,8 @@ from django.contrib.auth.decorators import login_required
 from random import *
 
 from .forms import CreateUserForm
-from .models import Movie, Ticket, Order, Concession_stand, Transaction_receipt, Show_time
-from .forms import TicketForm
+from .models import Movie, Ticket, Order, Concession_stand, Transaction_receipt, Show_time, Customer
+from .forms import TicketForm, CustomerInfoForm
 
 
 # Create your views here.
@@ -28,19 +28,28 @@ def registerPage(request):
 	if request.user.is_authenticated:
 		return redirect('home')
 	else:
-		form = CreateUserForm()
+		if request.method == 'GET':
+			form = CreateUserForm()		
+			context = {'form':form}
+			return render(request, 'register.html', context)
 		if request.method == 'POST':
 			form = CreateUserForm(request.POST)
 			if form.is_valid():
 				form.save()
 				user = form.cleaned_data.get('username')
+				user_email = form.cleaned_data.get('email')
 				messages.success(request, 'Account was created for ' + user)
 
-				return redirect('login')
+				#create instance of customer
+				customer_instance = Customer.objects.create(
+					customer_account_number = user,
+					customer_email = user_email
+				)
+
+				return redirect('customer_information')
 			
 
-		context = {'form':form}
-		return render(request, 'register.html', context)
+
 
 def loginPage(request):
 	if request.user.is_authenticated:
@@ -142,3 +151,16 @@ def order_summary(request):
 def thank_you_page(request):
 	if request.method == "GET":
 		return render(request, "thank_you_page.html", {})
+
+@login_required(login_url='login')
+def customer_information_inital(request):
+
+	if request.method == "GET":
+		form = CustomerInfoForm
+		return render(request, "customer_information.html", {'form':form})
+	if request.method == "POST":
+		form = CustomerInfoForm(request.POST)
+		if form.is_valid():
+			form.save()
+		#return render(request, 'concession_order.html', {})
+		return redirect('movie_showcase')

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Customer Information</h1>
+<center>
+<form id="ticket_form"  method="POST" action="{% url 'customer_information' %}">
+    {%csrf_token%}
+    {{form.as_p}}
+    <input type="submit" value="Submit" id="btn-submit" class="btn btn-success">
+
+</form>
+</center>
+{% endblock %}
