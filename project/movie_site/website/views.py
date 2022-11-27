@@ -154,12 +154,12 @@ def thank_you_page(request):
 
 @login_required(login_url='login')
 def customer_information_inital(request):
-
+	found_user_name = request.user
+	customer_form_found = Customer.objects.get(pk=found_user_name)
+	form = CustomerInfoForm(request.POST or None, instance=customer_form_found)
 	if request.method == "GET":
-		form = CustomerInfoForm
 		return render(request, "customer_information.html", {'form':form})
 	if request.method == "POST":
-		form = CustomerInfoForm(request.POST)
 		if form.is_valid():
 			form.save()
 		#return render(request, 'concession_order.html', {})
