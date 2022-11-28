@@ -5,6 +5,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from random import *
+from django.conf import settings
+from django.core.mail import send_mail
+
 
 from .forms import CreateUserForm
 from .models import Movie, Ticket, Order, Concession_stand, Transaction_receipt, Show_time, Customer
@@ -151,6 +154,21 @@ def order_summary(request):
 def thank_you_page(request):
 	if request.method == "GET":
 		return render(request, "thank_you_page.html", {})
+	if request.method == "POST":
+		print("POSTING FROM THANK YOU PAGE")
+		message = 'Hi , thank you for buying a ticket.'
+		#get email of user 
+		found_user_name = request.user
+		customer_form_found = Customer.objects.get(pk=found_user_name)
+		customer_email_found = str (customer_form_found.customer_email)
+		send_mail(
+            'Movie Project Group 8 CPSC 471', #subject
+            message, # message
+            'cpsc471project@gmail.com', #from email
+            [customer_email_found], #to email
+        )
+		return render(request, "thank_you_page.html", {})
+
 
 @login_required(login_url='login')
 def customer_information_inital(request):
