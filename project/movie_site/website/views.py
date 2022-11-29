@@ -156,8 +156,9 @@ def thank_you_page(request):
 		return render(request, "thank_you_page.html", {})
 	if request.method == "POST":
 		transaction_receipt_instance = Transaction_receipt.objects.last()
-		amount_spent = transaction_receipt_instance.amount
-		message = 'Hi , thank you for buying a ticket at your local cinema. You purchase of '+amount_spent+' will go to supporting a local business!'
+		amount_spent = str(transaction_receipt_instance.amount)
+		transaction_number_last = str(transaction_receipt_instance.transaction_number)
+		message = 'Hi , thank you for buying a ticket at your local cinema. You purchase of $'+amount_spent+' in transaction #'+transaction_number_last+' will go to supporting a local business!'
 		#get email of user 
 		found_user_name = request.user
 		customer_form_found = Customer.objects.get(pk=found_user_name)
@@ -168,7 +169,10 @@ def thank_you_page(request):
             'cpsc471project@gmail.com', #from email
             [customer_email_found], #to email
         )
-		return render(request, "thank_you_page.html", {})
+		
+		movie_list = Movie.objects.all()
+		all_show_times = Show_time.objects.all()
+		return render(request, 'movie_showcase.html', {'movie_list':movie_list, 'all_show_times':all_show_times})
 
 
 @login_required(login_url='login')
