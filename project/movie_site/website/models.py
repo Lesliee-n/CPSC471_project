@@ -72,12 +72,12 @@ class Show_time(models.Model):
     end_time = models.CharField(max_length=20, null = True, blank=True)
 
 class Ticket(models.Model):
-#employee_sex = models.CharField(max_length=50, choices=SEX_CHOICES, default="OTHER", null = True, blank=True)
-    show_time_movie_id = models.ForeignKey(Show_time, on_delete=models.CASCADE)
+    #ticket_id = models.AutoField(primary_key=True)
+    show_time_movie_id = models.ForeignKey(Show_time,null=False, on_delete=models.CASCADE)
     seat_number = models.IntegerField(choices=SEAT_CHOICES, default="1",null = True, blank=True)
     row_letter = models.CharField(choices=ROW_CHOICES, default="A",max_length = 2, null = True, blank=True)
     classification = models.BooleanField(null = True, blank=True)
-    price = models.FloatField(choices=PRICE_CHOICE, default="----",null = True, blank=True)
+    price = models.FloatField(choices=PRICE_CHOICE, default="0.00",null = True, blank=True)
     customer_account_number =  models.ForeignKey(Customer, on_delete=models.CASCADE)
 
 class Order(models.Model):

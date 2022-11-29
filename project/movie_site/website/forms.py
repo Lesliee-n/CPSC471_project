@@ -21,7 +21,7 @@ class TicketForm(forms.ModelForm):
         labels ={
 			'show_time_movie_id':'what movie showtime do you want to see?',
     		'seat_number':'Seat numbers available are from 1 to 10. Input your selection:',
-    		'row_letter':'Row letters avauable are from A to E. Input your selection',
+    		'row_letter':'Row letters available are from A to E. Input your selection',
     		'classification':'Are you a loyalty member?',
     		'price':'Select your ticket price.',
     		'date':'Input the movie date',

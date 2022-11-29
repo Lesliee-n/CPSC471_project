@@ -155,8 +155,9 @@ def thank_you_page(request):
 	if request.method == "GET":
 		return render(request, "thank_you_page.html", {})
 	if request.method == "POST":
-		print("POSTING FROM THANK YOU PAGE")
-		message = 'Hi , thank you for buying a ticket.'
+		transaction_receipt_instance = Transaction_receipt.objects.last()
+		amount_spent = transaction_receipt_instance.amount
+		message = 'Hi , thank you for buying a ticket at your local cinema. You purchase of '+amount_spent+' will go to supporting a local business!'
 		#get email of user 
 		found_user_name = request.user
 		customer_form_found = Customer.objects.get(pk=found_user_name)
